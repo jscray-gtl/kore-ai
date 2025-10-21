@@ -1,0 +1,40 @@
+context.KDEFEntries = []
+if(context.CurrentDisplayedBenefit.Bens[0].KDEF_DISPLAY == "Y"){
+    context.KDEFEntries = context.CurrentDisplayedBenefit.Bens[0].KDEFS;
+}
+
+
+context.BenefitDisplay = context.CurrentDisplayedBenefit.Bens[0].DISPLAY_NAME;
+koreDebugger.log(JSON.stringify(context.CurrentDisplayedBenefit));
+
+
+var displayBeforeKDEFS; 
+var displayAfterKDEFS;
+
+if(context.KDEFEntries){
+
+displayBeforeKDEFS = context.KDEFEntries  
+  .filter((entry) => entry.KEY_NUM === 0 && entry.DISPLAY_WEB === "Y" && entry.DISPLAY_FIRST === "Y")  
+  .map((entry) => entry.DESC_NUM);  
+  
+
+displayAfterKDEFS = context.KDEFEntries  
+  .filter((entry) => entry.KEY_NUM === 0 && entry.DISPLAY_WEB === "Y" && entry.DISPLAY_FIRST !== "Y")  
+  .map((entry) => entry.DESC_NUM);
+  
+}
+
+koreDebugger.log("BenefitJson: " + JSON.stringify(context.BenefitJsons));
+
+
+context.DisplayBeforeKDEFS = displayBeforeKDEFS;
+context.DisplayAfterKDEFS = displayAfterKDEFS;
+context.KDEF1Value = "";
+context.KDEF2Value = "";
+context.KDEF3Value = "";
+context.KDEF4Value = "";
+context.KDEF1ABV = "";
+context.KDEF2ABV = "";
+context.KDEF3ABV = "";
+context.KDEF4ABV = "";
+context.BenefitValue = "";

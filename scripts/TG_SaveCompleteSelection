@@ -1,0 +1,195 @@
+//SETUP FOR API
+
+// Validate AI_Assisted_Dialogs exists and has expected structure before using it
+if(context && context.AI_Assisted_Dialogs && typeof context.AI_Assisted_Dialogs === 'object'){
+    if(context.AI_Assisted_Dialogs.BenefitSelection?.entities?.find(entity => entity?.BenefitValue)?.BenefitValue){
+        delete context.AI_Assisted_Dialogs.BenefitSelection.entities.find(entity => entity?.BenefitValue)?.BenefitValue;
+    }
+    //lowerCase version
+    if(context.AI_Assisted_Dialogs.benefitselection?.entities?.find(entity => entity?.BenefitValue)?.BenefitValue){
+        delete context.AI_Assisted_Dialogs.benefitselection.entities.find(entity => entity?.BenefitValue)?.BenefitValue;
+    }
+}
+
+koreDebugger.log("BenefitJSONs:" + JSON.stringify(context.BenefitJsons));
+koreDebugger.log("AllSelectionsPre:" + JSON.stringify(context.BenefitSelections));
+
+var benefitCode = context.CurrentDisplayedBenefit.Bens[0]?.COVERAGE_ID;
+
+context.IsPrimaryBenefit = false;
+if(context.CurrentDisplayedBenefit.Bens[0]?.DISPLAY_ORDER == 1){
+    context.IsPrimaryBenefit = true;
+}
+let selection = {
+    "BenefitCode": benefitCode,
+    "KDEF1": context.Kdef1Value,
+    "KDEF2": context.Kdef2Value,
+    "KDEF3": context.Kdef3Value,
+    "KDEF4": context.Kdef4Value,
+    "KDEF1ABV": context.Kdef1ABV,
+    "KDEF2ABV": context.Kdef2ABV,
+    "KDEF3ABV": context.Kdef3ABV,
+    "KDEF4ABV": context.Kdef4ABV,
+    "BenefitValue": context.BenefitValue
+};
+
+let breakFlag = false
+if (context && context.DisplayedBenefitsIN) {
+    for (const displayedBenefit of context.DisplayedBenefitsIN) {
+        if (displayedBenefit.Bens) { // Ensure Bens array exists
+            for (let i = 0; i < displayedBenefit.Bens.length; i++) {
+                if(breakFlag){
+                    break;
+                }
+                const ben = displayedBenefit.Bens[i];
+                if (ben.COVERAGE_ID === benefitCode) {
+                    // *** Modify the benefit directly on the context object ***
+                    displayedBenefit.SelectionMade = true;
+                    breakFlag = true;
+                }
+            }
+        }
+        if(breakFlag){
+            break;
+        }
+    }
+}
+
+
+
+/*if(benefitCode && benefitCode.includes("FE")){
+    selection = {
+                    "BenefitCode": benefitCode,
+                    "BenefitValue": context.CurrentDisplayedBenefit.Bens[0]?.MAX_ISSUE_AMT_WEB
+                };
+}*/
+
+/*if(context.SpouseSelecting){
+    if(context.BenefitSelectionsSpouse){
+        context.BenefitSelectionsSpouse.push(selection);
+    }
+    else{
+        context.BenefitSelectionsSpouse = []
+        context.BenefitSelectionsSpouse.push(selection);
+    }
+}else{
+    if(context.BenefitSelections){
+        context.BenefitSelections.push(selection);
+    }
+    else{
+        context.BenefitSelections = []
+        context.BenefitSelections.push(selection);
+    }
+}*/
+koreDebugger.log("thisSelection:" + JSON.stringify(selection));
+if(context.BenefitSelections){
+    if(context.BenefitSelections.some((ben) => ben.BenefitCode == selection.BenefitCode)){
+        const index = context.BenefitSelections.findIndex((ben) => ben.BenefitCode === selection.BenefitCode);
+        if (index !== -1) {
+            // Only update if the existing selection doesn't have KDEF values or the new selection has better KDEF values
+            const existingSelection = context.BenefitSelections[index];
+            const hasExistingKDEF = existingSelection.KDEF1 || existingSelection.KDEF1ABV;
+            const hasNewKDEF = selection.KDEF1 || selection.KDEF1ABV;
+
+            if (!hasExistingKDEF && hasNewKDEF) {
+                // Update with new KDEF values
+                context.BenefitSelections[index] = selection;
+            } else if (hasExistingKDEF) {
+                // Keep existing KDEF values, just update other fields if needed
+                Object.keys(selection).forEach(key => {
+                    if (key !== 'KDEF1' && key !== 'KDEF1ABV' && key !== 'KDEF2' && key !== 'KDEF2ABV' &&
+                        key !== 'KDEF3' && key !== 'KDEF3ABV' && key !== 'KDEF4' && key !== 'KDEF4ABV') {
+                        if (selection[key] !== undefined && selection[key] !== null) {
+                            existingSelection[key] = selection[key];
+                        }
+                    }
+                });
+            } else {
+                // Replace entirely if neither has KDEF values
+                context.BenefitSelections[index] = selection;
+            }
+        }
+    }else{
+        context.BenefitSelections.push(selection);
+    }
+
+}
+else{
+    context.BenefitSelections = []
+    context.BenefitSelections.push(selection);
+}
+
+const hasFEBenefit = context.BenefitSelections?.some(selection => selection.BenefitCode?.includes("FE"));
+
+if (!hasFEBenefit) {
+    feeBen = context.BenefitJsons.find((ben) => ben.COVERAGE_ID.includes("FE"));
+
+    koreDebugger.log("FeeBen: " + JSON.stringify(feeBen));
+    if(feeBen){
+        selection = {
+        "BenefitCode": feeBen.COVERAGE_ID,
+        "BenefitValue": feeBen.MAX_ISSUE_AMT_WEB
+    };
+    
+    context.BenefitSelections.push(selection);
+    }
+    
+}
+
+const dueBenefit = context.BenefitJsons.find((ben) => ben.DISPLAY_NAME.includes("Due") || ben.DISPLAY_NAME.includes("Membership Fee"));
+
+
+if(dueBenefit){
+    const hasDueBenefit = context.BenefitSelections?.some(selection => selection.BenefitCode == dueBenefit.COVERAGE_ID);
+    
+    if (!hasDueBenefit) {
+        dueBen = context.BenefitJsons.find((ben) => ben.COVERAGE_ID == dueBenefit.COVERAGE_ID);
+        if(dueBen){
+
+            selection = {
+                "BenefitCode": dueBen.COVERAGE_ID,
+                "BenefitValue": dueBen.MAX_ISSUE_AMT_WEB
+            };
+        
+            context.BenefitSelections.push(selection);
+        }
+        
+    }
+}
+
+koreDebugger.log("AllSelections:" + JSON.stringify(context.BenefitSelections));
+
+if(context.DisplayBeforeKDEFS){
+    delete context.DisplayBeforeKDEFS;
+}
+
+if(context.DisplayAfterKDEFS){
+    delete context.DisplayAfterKDEFS;
+}
+if(context.Kdef1Value){
+   delete context.Kdef1Value; 
+}
+if(context.Kdef2Value){
+   delete context.Kdef2Value; 
+}
+if(context.Kdef3Value){
+    delete context.Kdef3Value;
+}
+if(context.Kdef4Value){
+    delete context.Kdef4Value;
+}
+if(context.Kdef1ABV){
+    delete context.Kdef1ABV;
+}
+if(context.Kdef2ABV){
+    delete context.Kdef2ABV;
+}
+if(context.Kdef3ABV){
+    delete context.Kdef3ABV;
+}
+if(context.Kdef4ABV){
+    delete context.Kdef4ABV;
+}
+if(context.BenefitValue){
+    delete context.BenefitValue;
+}

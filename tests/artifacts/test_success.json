@@ -1,0 +1,119 @@
+{
+    "botId": "st-632dfdf2-e66c-5baa-a48d-f7b15e96e07e",
+    "botName": "automated_testing",
+    "testCases": [
+        {
+            "preprocessor": "",
+            "name": "TEST_START_EXIT",
+            "tags": [
+                "UGHIP",
+                "UNL"
+            ],
+            "description": "Base UGHIP Test Case",
+            "messages": [
+                {
+                    "input": "Start_Flow",
+                    "event": "Start_Flow",
+                    "outputs": [
+                        {
+                            "contains": "Hi! I’m GTL’s Virtual Assistant. I’m here to help with many of the common questions you may have. Automation bot"
+                        },
+                        {
+                            "contains": "I can help you with Quote Advantage Plus elite, Recent Business, FAQs, or type your question to get started."
+                        }
+                    ]
+                },
+                {
+                    "input": "quote",
+                    "outputs": [
+                        {
+                            "contains": "{\"type\":\"template\",\"payload\":{\"template_type\":\"quick_replies\",\"text\":\"Great! Right now I can only quote for Hospital Indemnity, should we continue?\",\"quick_replies\":[{\"content_type\":\"text\",\"title\":\"Yes\",\"payload\":\"Yes\"},{\"content_type\":\"text\",\"title\":\"No\",\"payload\":\"No\"}]}}"
+                        }
+                    ]
+                },
+                {
+                    "input": "yes",
+                    "outputs": [
+                        {
+                            "contains": "I’ll need a few details about the applicant to proceed. Could you provide their date of birth, sex, and the state they live in?"
+                        }
+                    ]
+                },
+                {
+                    "input": "M, IL, 01/01/1960",
+                    "outputs": [
+                        {
+                            "contains": "{\"type\":\"template\",\"payload\":{\"template_type\":\"button\",\"text\":\"Which version of this product would you like?\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Guaranteed Issue Hospital Indemnity Shield\",\"payload\":\"Guaranteed Issue Hospital Indemnity Shield\"},{\"type\":\"postback\",\"title\":\"Hospital Indemnity Shield\",\"payload\":\"Hospital Indemnity Shield\"}],\"icon_type\":\"\",\"uiText\":\"Please provide your input\",\"variation\":\"plain\",\"fullWidth\":false,\"stackedButtons\":false}}"
+                        }
+                    ]
+                },
+                {
+                    "input": "Hospital Indemnity Shield",
+                    "outputs": [
+                        {
+                            "contains": "For Daily Hospital Confinement Benefit, please choose your Number of Days Payable Per Benefit Period?"
+                        }
+                    ]
+                },
+                {
+                    "input": "10",
+                    "outputs": [
+                        {
+                            "contains": "What amount would you like for Daily Hospital Confinement Benefit? Please choose between $100 and $900 in increments of $10."
+                        }
+                    ]
+                },
+                {
+                    "input": "900",
+                    "outputs": [
+                        {
+                            "contains": "One moment while I calculate the quote..."
+                        },
+                        {
+                            "contains": "Premiums are subject to change. This is not a guarantee of insurance coverage."
+                        },
+                        {
+                            "contains": "{\"type\":\"template\",\"payload\":{\"template_type\":\"quoteDisplayTemplate\",\"dataItems\":[{\"name\":\"Daily Hospital Confinement Benefit\",\"selection\":\"$900\",\"price\":\"$42.90\"},{\"name\":\"Number of Days Payable Per Benefit Period\",\"selection\":\"10 Days\",\"price\":\"\"},{\"name\":\"Policy Fee\",\"selection\":\"\",\"price\":\"$1.67\"},{\"name\":\"Monthly Premium\",\"selection\":\"\",\"price\":\"$44.57\"}],\"AgeIN\":\"65\",\"State\":\"IL\",\"Sex\":\"M\",\"ProductName\":\"Hospital Indemnity Shield\"}}"
+                        },
+                        {
+                            "contains": "{\"type\":\"template\",\"payload\":{\"template_type\":\"button\",\"text\":\"Which of the following would you like to do?\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Update base benefit\",\"payload\":\"Update base benefit\"},{\"type\":\"postback\",\"title\":\"Add a rider\",\"payload\":\"Add a rider\"},{\"type\":\"postback\",\"title\":\"Restart rider selection\",\"payload\":\"Restart rider selection\"},{\"type\":\"postback\",\"title\":\"Exit\",\"payload\":\"Exit\"}],\"icon_type\":\"\",\"uiText\":\"Which of the following would you like to do?\",\"variation\":\"plain\",\"fullWidth\":false,\"stackedButtons\":false}}"
+                        }
+                    ]
+                },
+                {
+                    "input": "Add a rider",
+                    "outputs": [
+                        {
+                            "contains": "Here are the available benefits the applicant can add to their policy:\n- Ambulance\n- Skilled Nursing Facility\n- Outpatient Surgical\nIf you do not want to add a rider, you may choose none.\nWhich one would you like to select?"
+                        }
+                    ]
+                },
+                {
+                    "input": "Ambulance",
+                    "outputs": [
+                        {
+                            "contains": "What amount would you like for Ambulance Rider? Please choose between $250 and $1000 in increments of $10."
+                        }
+                    ]
+                },
+                {
+                    "input": "250",
+                    "outputs": [
+                        {
+                            "contains": "One moment while I calculate the quote..."
+                        },
+                        {
+                            "contains": "Premiums are subject to change. This is not a guarantee of insurance coverage."
+                        },
+                        {
+                            "contains": "{\"type\":\"template\",\"payload\":{\"template_type\":\"quoteDisplayTemplate\",\"dataItems\":[{\"name\":\"Daily Hospital Confinement Benefit\",\"selection\":\"$900\",\"price\":\"$42.90\"},{\"name\":\"Number of Days Payable Per Benefit Period\",\"selection\":\"10 Days\",\"price\":\"\"},{\"name\":\"Outpatient Surgical Rider\",\"selection\":\"$250\",\"price\":\"$5.61\"},{\"name\":\"Policy Fee\",\"selection\":\"\",\"price\":\"$1.67\"},{\"name\":\"Monthly Premium\",\"selection\":\"\",\"price\":\"$50.18\"}],\"AgeIN\":\"65\",\"State\":\"IL\",\"Sex\":\"M\",\"ProductName\":\"Hospital Indemnity Shield\"}}"
+                        },
+                        {
+                            "contains": "{\"type\":\"template\",\"payload\":{\"template_type\":\"button\",\"text\":\"Which of the following would you like to do?\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Update base benefit\",\"payload\":\"Update base benefit\"},{\"type\":\"postback\",\"title\":\"Add a rider\",\"payload\":\"Add a rider\"},{\"type\":\"postback\",\"title\":\"Restart rider selection\",\"payload\":\"Restart rider selection\"},{\"type\":\"postback\",\"title\":\"Exit\",\"payload\":\"Exit\"}],\"icon_type\":\"\",\"uiText\":\"Which of the following would you like to do?\",\"variation\":\"plain\",\"fullWidth\":false,\"stackedButtons\":false}}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

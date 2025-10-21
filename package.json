@@ -1,0 +1,33 @@
+{
+  "name": "kore-ai-selenium-tests",
+  "version": "1.0.0",
+  "description": "Selenium WebDriver tests for Kore.ai chatbot automation",
+  "main": "tests/chatbot-test.js",
+  "scripts": {
+    "test": "node tests/chatbot-test.js",
+    "test:headless": "HEADLESS=true node tests/chatbot-test.js",
+    "install-drivers": "node node_modules/selenium-webdriver/scripts/download-chromedriver.js"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.15.0",
+    "chromedriver": "^119.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10"
+  },
+  "keywords": [
+    "selenium",
+    "webdriver",
+    "automation",
+    "chatbot",
+    "testing",
+    "kore-ai"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
+

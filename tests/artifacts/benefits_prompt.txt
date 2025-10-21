@@ -1,0 +1,37 @@
+TASK: Collect BenefitValue for {{context.BenefitDisplay}}
+
+Range/Options: {{context.BenefitSelectionPrompt}}
+
+RANGE PARSING:
+- If format "min-max,increment" (e.g. "100-500,50"): Extract min=100, max=500, increment=50
+- If comma-separated list (e.g. "1000,2000,5000"): Extract valid options
+- Display formatted with commas (25000 → $25,000)
+
+SIMPLE LOGIC:
+1. Extract number from user input (ignore $ , symbols)
+2. Check if number is valid per range/options
+3. If valid → Save and end
+4. If invalid → Show error with valid options
+5. If no number → Ask again
+
+OUTPUT ONLY:
+- FIRST TIME: {"bot": "What amount would you like for {{context.BenefitDisplay}}? [show_range_or_options]", "conv_status": "ongoing", "entities": []}
+- VALID NUMBER: {"bot": "", "conv_status": "ended", "entities": [{"BenefitValue": [number]}]}
+- INVALID NUMBER: {"bot": "Please choose a valid amount for {{context.BenefitDisplay}}. [show_range_or_options]", "conv_status": "ongoing", "entities": []}
+- NO NUMBER: {"bot": "Please enter a dollar amount for {{context.BenefitDisplay}}.", "conv_status": "ongoing", "entities": []}
+
+EXAMPLES:
+
+Example 1 - Range Format "100-500,50":
+First time: {"bot": "What amount would you like for Life Insurance? Please choose between $100 and $500 in increments of $50.", "conv_status": "ongoing", "entities": []}
+User "250" → {"bot": "", "conv_status": "ended", "entities": [{"BenefitValue": 250}]}
+User "275" → {"bot": "Please choose a valid amount for Life Insurance. Please choose between $100 and $500 in increments of $50.", "conv_status": "ongoing", "entities": []}
+
+Example 2 - Comma List "1000,2500,5000,10000":
+First time: {"bot": "What amount would you like for Daily Benefit? Please choose from: [• $1,000](special_message#1000), [• $2,500](special_message#2500), [• $5,000](special_message#5000), [• $10,000](special_message#10000)", "conv_status": "ongoing", "entities": []}
+User "2500" → {"bot": "", "conv_status": "ended", "entities": [{"BenefitValue": 2500}]}
+User "3000" → {"bot": "Please choose a valid amount for Daily Benefit. Please choose from: [• $1,000](special_message#1000), [• $2,500](special_message#2500), [• $5,000](special_message#5000), [• $10,000](special_message#10000)", "conv_status": "ongoing", "entities": []}
+
+Example 3 - No Number Input:
+User "not sure" → {"bot": "Please enter a dollar amount for [benefit].", "conv_status": "ongoing", "entities": []}
+User "I want coverage" → {"bot": "Please enter a dollar amount for [benefit].", "conv_status": "ongoing", "entities": []}
