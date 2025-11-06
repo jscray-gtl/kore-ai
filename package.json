@@ -6,6 +6,20 @@
   "scripts": {
     "test": "node tests/chatbot-test.js",
     "test:headless": "HEADLESS=true node tests/chatbot-test.js",
+    "test:api": "mocha tests/api-integration-tests.js --timeout 15000",
+    "test:api:verbose": "mocha tests/api-integration-tests.js --timeout 15000 --reporter spec",
+    "test:e2e": "mocha tests/e2e-quote-tests.js --timeout 20000",
+    "test:e2e:verbose": "mocha tests/e2e-quote-tests.js --timeout 20000 --reporter spec",
+    "test:workflow": "node tests/workflow-integration.js",
+    "test:workflow:batch": "node tests/workflow-integration.js all",
+    "test:workflow:verbose": "node tests/workflow-integration.js all verbose",
+    "test:generate-data": "node tests/test-data-generator.js",
+    "test:load-benefits": "node tests/benefits-loader-examples.js all",
+    "test:load-benefits:gtl": "node tests/benefits-loader-examples.js load-gtl",
+    "test:load-benefits:unl": "node tests/benefits-loader-examples.js load-unl",
+    "test:execute:script": "node tests/e2e-script-executor.js",
+    "test:execute:script:all": "node tests/e2e-script-executor.js all",
+    "test:execute:script:verbose": "node tests/e2e-script-executor.js 0 verbose",
     "install-drivers": "node node_modules/selenium-webdriver/scripts/download-chromedriver.js"
   },
   "dependencies": {
