@@ -1,0 +1,168 @@
+{
+  "total": 20,
+  "passed": 0,
+  "failed": 20,
+  "errors": 0,
+  "details": [
+    {
+      "testNum": "1",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350",
+      "expected": 131.46,
+      "got": 10.5,
+      "diff": 120.96000000000001
+    },
+    {
+      "testNum": "2",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200",
+      "expected": 136.37,
+      "got": 10.5,
+      "diff": 125.87
+    },
+    {
+      "testNum": "3",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 OT 500",
+      "expected": 141.28,
+      "got": 10.5,
+      "diff": 130.78
+    },
+    {
+      "testNum": "4",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 1 1000 AM 400",
+      "expected": 95.8,
+      "got": 30,
+      "diff": 65.8
+    },
+    {
+      "testNum": "5",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 1 1000 AM 400 SNF1 100",
+      "expected": 131.77,
+      "got": 30,
+      "diff": 101.77000000000001
+    },
+    {
+      "testNum": "6",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200",
+      "expected": 108.2,
+      "got": 10.5,
+      "diff": 97.7
+    },
+    {
+      "testNum": "7",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 OT 500",
+      "expected": 113.11,
+      "got": 10.5,
+      "diff": 102.61
+    },
+    {
+      "testNum": "8",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 SNF2 300",
+      "expected": 278.34,
+      "got": 11,
+      "diff": 267.34
+    },
+    {
+      "testNum": "9",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 OT 500",
+      "expected": 123.22,
+      "got": 10.75,
+      "diff": 112.47
+    },
+    {
+      "testNum": "10",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 OT 500 OS 750",
+      "expected": 128.13,
+      "got": 11.5,
+      "diff": 116.63
+    },
+    {
+      "testNum": "11",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 OT 500 OS 750 SNF1 100",
+      "expected": 163.04,
+      "got": 11.6,
+      "diff": 151.44
+    },
+    {
+      "testNum": "12",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 OT 500 OS 750 SNF1 100 LSCN 5000",
+      "expected": 174.59,
+      "got": 16.6,
+      "diff": 157.99
+    },
+    {
+      "testNum": "13",
+      "status": "FAIL",
+      "input": "quote adv ID F 64 10 350 AM 200 OT 500 OS 750 SNF1 100 LSCN 5000 TIR 10000",
+      "expected": 184.59,
+      "got": 16.6,
+      "diff": 167.99
+    },
+    {
+      "testNum": "14",
+      "status": "FAIL",
+      "input": "quote adv FL F 64 10 350",
+      "expected": "ERROR",
+      "got": 10.5,
+      "diff": 10.5
+    },
+    {
+      "testNum": "15",
+      "status": "FAIL",
+      "input": "quote adv IL F 64 10 350 AM 200",
+      "expected": 123.22,
+      "got": 10.7,
+      "diff": 112.52
+    },
+    {
+      "testNum": "16",
+      "status": "FAIL",
+      "input": "quote adv IL F 64 10 350 AM 200 OT 500",
+      "expected": 128.13,
+      "got": 10.75,
+      "diff": 117.38
+    },
+    {
+      "testNum": "17",
+      "status": "FAIL",
+      "input": "quote adv IL F 64 10 350 AM 200 OT 500 OS 750",
+      "expected": 133.04,
+      "got": 11.5,
+      "diff": 121.53999999999999
+    },
+    {
+      "testNum": "18",
+      "status": "FAIL",
+      "input": "quote adv IL F 64 10 350 AM 200 OT 500 OS 750 SNF1 100",
+      "expected": 167.95,
+      "got": 11.6,
+      "diff": 156.35
+    },
+    {
+      "testNum": "19",
+      "status": "FAIL",
+      "input": "quote adv IL F 64 10 350 AM 200 OT 500 OS 750 SNF1 100 LSCN 5000",
+      "expected": 179.5,
+      "got": 16.6,
+      "diff": 162.9
+    },
+    {
+      "testNum": "20",
+      "status": "FAIL",
+      "input": "quote adv IL F 64 10 350 AM 200 OT 500 OS 750 SNF1 100 LSCN 5000 TIR 10000",
+      "expected": 189.5,
+      "got": 16.6,
+      "diff": 172.9
+    }
+  ]
+}
